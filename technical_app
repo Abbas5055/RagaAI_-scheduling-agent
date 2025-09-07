@@ -1,0 +1,101 @@
+# Technical Approach 
+
+Introduction :
+
+The goal of this project was to design and implement a minimal viable 
+product (MVP) for a patient intake andgit init
+. The agent 
+simulates the flow of a clinic front  
+desk system by collecting patient data, checking for returning 
+patients, offering doctor slots, booking appointments, and providing 
+admin-level management features. The focus was on building a smooth, 
+step-by-step experience while ensuring that the solution could be 
+extended into production with real EMR and calendar integrations
+
+Technology Stack: 
+
+The system is developed in Python using Streamlit as the front-end 
+framework to create a responsive web application. Streamlit was chosen 
+for its simplicity and ability to quickly create interactive workflows. 
+Pandas is used for handling patient, schedule, and appointment data 
+stored in CSV and Excel files. Openpyxl enables integration with Excel, 
+allowing schedules and appointment logs to be exported and updated 
+easily. Numpy provides additional support for data operations
+
+Data Model:
+
+Three main datasets drive the application: patients, doctor schedules, 
+and appointments. Patients are stored in patients.csv with fields 
+including name, date of birth, contact details, insurance information, 
+and a flag for returning status. Doctor schedules are kept in 
+doctor_schedules.xlsx, defining doctors, locations, available days, and 
+time slots. Appointments are logged in appointments.xlsx with details 
+on patient, doctor, time slot, and status. This structure ensures a 
+lightweight but realistic simulation of clinic operations. 
+
+Workflow Design:
+
+The workflow follows a sliding window, step-by-step intake process. 
+Patients are greeted based on the time of day, and the form only asks 
+one question at a time to maintain clarity. The system checks if the 
+patient is new or returning by matching name and date of birth. New 
+patients require a longer appointment (60 minutes), while returning 
+patients are scheduled for shorter sessions (30 minutes). Doctor 
+availability is validated against the schedule file to prevent double 
+bookings. Once a slot is selected, the system blocks it in the schedule 
+and records the appointment.Architecture  
+
+User Experience: 
+
+The interface has been styled to reflect a hospital theme with light 
+gradients and card layouts. Progress indicators show which step the 
+patient is on, and compact cards are used to present appointment slots. 
+Status badges distinguish scheduled, confirmed, and cancelled 
+appointments. Reminder previews simulate SMS and email notifications to 
+improve the realism of the demo. 
+
+Admin Features:
+
+An admin panel is provided to upload new patient or schedule files, as 
+well as to export the appointments log. This simulates how staff could 
+interact with the system for record management. The reset option allows 
+restarting the wizard for testing multiple flows. 
+
+Extensibility:
+
+lthough this MVP uses local CSV and Excel files, the architecture is 
+designed to be extended. In production, patient data could be fetched 
+from an EMR system, schedules from a calendar API, and reminders sent 
+through SMS or email services. The modular data handling makes it 
+straightforward to swap file-based storage with API-based backends
+
+Overview: 
+
+Streamlit UI invokes AIScheduler service. - AIScheduler wraps EMRTool, CalendarTool, InsuranceTool, 
+MessagingTool, ExportTool, ReminderTool. - Patient lookup via CSV EMR, booking into Excel schedule. 
+Framework Choice: - LangChain/LangGraph are referenced in requirements for extensibility. 
+Current MVP uses tool-style services to keep the demo fully local and 
+executable. 
+Integration Strategy:
+
+Patient Data: 
+ 
+CSV as EMR. - Calendar: Excel file with free/booked slots. Booking writes back to 
+Excel and generates admin export Excel. - Communication: Simulated Email and SMS by writing files into outbox 
+folders. - Forms: Text templates emailed after confirmation. - Reminders: CSV log with required confirmation and form status fields.
+
+Challenges & Solutions:
+
+ Data validation and NLP: Minimal deterministic validation in 
+MVP; can be extended with LLMs. - File/API management: Excel read/write with openpyxl, file-based 
+outbox to simulate integrations. - Business logic: 60 min for new, 30 min for returning. Automatic 
+detection from EMR and updates on booking. - Scheduling & tracking: Reminder entries recorded with types 1, 
+2, 3 including action checks. 
+
+Conclusion:
+
+The solution demonstrates a clear, human-centered workflow for patient 
+intake and scheduling. By combining a step-by-step interface with 
+robust data handling and admin functionality, the MVP achieves the 
+assignment requirements while leaving room for future expansion into 
+production systems 
