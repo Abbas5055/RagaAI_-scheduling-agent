@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 RagaAI Medical Scheduler - MVP
 This project is a Streamlit app that demonstrates a simple scheduling agent covering:
 1. Warm greeting and step-by-step intake flow
@@ -11,3 +12,6 @@ To run
 1. install dependencies from requirements.txt
 2. place the data folder next to app.py or use the included data
 3. streamlit run app.py
+=======
+# RagaAI_-scheduling-agent
+>>>>>>> c989fb577d050613e1120789b336a771ae6f9913
